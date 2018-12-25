@@ -1,0 +1,13 @@
+package com.example.sell.repository;
+
+import com.example.sell.entity.OrderMaster;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderMasterRepository extends JpaRepository<OrderMaster,String> {
+
+    /* 分页查询+买家微信号buyerOpenid 条件查询 */
+    Page<OrderMaster> findByBuyerOpenid(String buyerOpenid, Pageable pageable);
+
+}
