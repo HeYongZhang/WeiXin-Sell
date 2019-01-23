@@ -6,21 +6,38 @@ import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
 
-    /** 创建订单    */
+    /**
+     * 创建订单
+     */
     OrderDTO create(OrderDTO orderDTO);
 
-    /** 订单单个查询  */
+    /**
+     * 订单单个查询
+     */
     OrderDTO findOne(String orderId);
 
-    /** 分页查询+微信Openid查询 */
+    /**
+     * 分页查询+微信Openid查询
+     */
     Page<OrderDTO> findList(String buyerOpenid, Pageable pageable);
 
-    /** 取消订单 */
+    /**
+     * 取消订单
+     */
     OrderDTO cancle(OrderDTO orderDTO);
 
-    /** 完结订单 */
+    /**
+     * 完结订单
+     */
     OrderDTO finish(OrderDTO orderDTO);
 
-    /** 支付订单 */
+    /**
+     * 支付订单
+     */
     OrderDTO paid(OrderDTO orderDTO);
+
+    /**
+     * 查询所有新订单
+     */
+    Page<OrderDTO> findList(Pageable pageable,String createTime);
 }

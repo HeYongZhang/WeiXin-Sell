@@ -6,12 +6,13 @@ public class KeyUtil {
 
     /**
      * 生成唯一key
+     *
      * @return
      */
-    public static synchronized String GetUniquekey(){
+    public static synchronized String GetUniquekey() {
         Random random = new Random();
-        Integer number = random.nextInt(900000)+100000;
+        Integer number = random.nextInt(900000) + 100000;
 
-        return System.currentTimeMillis()+String.valueOf(number);
+        return System.currentTimeMillis() + String.valueOf(number);
     }
 }

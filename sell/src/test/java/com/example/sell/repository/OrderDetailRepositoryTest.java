@@ -23,12 +23,12 @@ public class OrderDetailRepositoryTest {
     @Test
     public void findByOrOrderId() {
         List<OrderDetail> byOrOrderId = repository.findByOrOrderId("123456");
-        assertNotEquals(0,byOrOrderId.size());
+        assertNotEquals(0, byOrOrderId.size());
     }
 
 
     @Test
-    public void save(){
+    public void save() {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setDetailId("12345678");
         orderDetail.setOrderId("123456");

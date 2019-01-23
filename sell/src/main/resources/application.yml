@@ -2,15 +2,39 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 1234567
-    #jdbc:mysql://192.168.43.118/sell?characterEncoding=utf-8&useSSL=false
-    #jdbc:mysql://192.168.43.246/sell?characterEncoding=utf-8&useSSL=false
-    #jdbc:mysql://192.168.0.104/sell?characterEncoding=utf-8&useSSL=false
-    url: jdbc:mysql://192.168.43.118/sell?characterEncoding=utf-8&useSSL=false
-    #jdbc:mysql://192.168.0.104/sell?characterEncoding=utf-8&useSSL=false
-  jpa:
-    show-sql: true
+    password: 123456
+    url: jdbc:mysql://192.168.43.246/sell?characterEncoding=utf-8&useSSL=false
+  #jpa:
+   # show-sql: true
   jackson:
     default-property-inclusion: non_null
+  redis:
+    host: 192.168.43.246
+    port: 6379
+    database: 0
+  http:
+    multipart:
+      max-file-size: 200mb
+      max-request-size: 200mb
 server:
   context-path: /sell
+  port: 81
+wechat:
+  #公众号开发人员账号
+  mpAppId: wx718d1594eea0ab8a
+  mpAppSecret: 21c27704ef6da226a5e4539e56121414
+  #商户信息（用于用户微信支付，需要商户证件号注册服务号才能使用，目前我是订阅号）
+  #mchId: mchId
+  #mchKey: mchKey
+  #keyPath: keyPath
+  #notifyUrl: http://hyzgt.nat300.top/notify
+  #模块id：
+  templateId:
+    orderStatus: 6T0QMB2AlF5DO2u7Em2rm4huiP90fnMTC0CznULPZB4
+    orderCancle: Hnq90DvurGn96O7F_bwe8SJegSSuCT2isS6BXkyIp-c
+
+  url:
+    wechatMpAutorizeUrl: http://hyzgt.nat300.top
+    wechatRqCodeUrl: http://hyzgt.nat300.top
+    sell: http://hyzgt.nat300.top
+#{{first.DATA}} 商家名称 : {{keyword1.DATA}} 商家电话 : {{keyword2.DATA}} 订单号{{keyword3.DATA}} 状态 : {{keyword4.DATA}} 总价 : {{keyword5.DATA}} {{remark.DATA}}

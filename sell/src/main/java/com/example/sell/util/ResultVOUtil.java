@@ -4,7 +4,7 @@ import com.example.sell.VO.ResultVO;
 
 public class ResultVOUtil {
 
-    public static ResultVO success(Object object){
+    public static ResultVO success(Object object) {
         ResultVO resultVO = new ResultVO();
         resultVO.setData(object);
         resultVO.setMsg("成功");
@@ -12,11 +12,11 @@ public class ResultVOUtil {
         return resultVO;
     }
 
-    public static ResultVO success(){
+    public static ResultVO success() {
         return success(null);
     }
 
-    public static ResultVO error(Integer code,String msg){
+    public static ResultVO error(Integer code, String msg) {
         ResultVO resultVO = new ResultVO();
         resultVO.setMsg(msg);
         resultVO.setCode(code);

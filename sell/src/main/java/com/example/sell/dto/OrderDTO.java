@@ -1,11 +1,17 @@
 package com.example.sell.dto;
 
 import com.example.sell.entity.OrderDetail;
+import com.example.sell.enums.OrderStatusEnum;
+import com.example.sell.enums.PayStatusEnum;
+import com.example.sell.util.EnumUtil;
 import com.example.sell.util.serializer.Date2LongSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
+import org.apache.commons.lang3.EnumUtils;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +20,9 @@ import java.util.List;
 @Data
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrderDTO {
+public class OrderDTO implements Serializable {
+
+    private static final long serialVersionUID = -8041797948663853385L;
 
     /*  买家名字  */
     private String buyerName;
@@ -28,7 +36,9 @@ public class OrderDTO {
     /*  买家微信openid */
     private String buyerOpenid;
 
-    /** 订单编号 */
+    /**
+     * 订单编号
+     */
     private String orderId;
 
     /*  订单总金额  */
@@ -50,4 +60,14 @@ public class OrderDTO {
 
     /* 订单详情 */
     private List<OrderDetail> orderDetailList;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum(){
+        return EnumUtil.getByCode(orderStatus,OrderStatusEnum.class);
+    }
+
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum(){
+        return EnumUtil.getByCode(payStatus,PayStatusEnum.class);
+    }
 }

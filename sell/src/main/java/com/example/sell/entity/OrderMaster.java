@@ -5,9 +5,8 @@ import com.example.sell.enums.PayStatusEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -19,7 +18,10 @@ import java.util.Date;
 @Entity
 @DynamicUpdate
 @Data
-public class OrderMaster {
+public class OrderMaster implements Serializable {
+
+
+    private static final long serialVersionUID = 6907079691180753652L;
 
     /*  订单id    */
     @Id

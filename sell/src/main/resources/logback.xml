@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--configuration环境定义标签-->
+<configuration>
+
+    <!--log三大组件 Appender Logger Layout-->
+    <!--
+       Logger：日志记录器，负责收集处理日志记录  （如何处理日志）
+       Appender：日志输出目的地，负责日志的输出  （输出到什么 地方）
+       Layout：日志格式化，负责对输出的日志格式化（以什么形式展现）
+    -->
+
+    <!--
+        ConsoleAppender：控制台附加类
+        ch.qos.logback.core.ConsoleAppender 表示控制台输出
+    -->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <!--设置控制台输出格式-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--
+               日志输出格式：
+                   %d表示日期时间，
+                   %thread表示线程名，
+                   %-5level：级别从左显示5个字符宽度
+                   %logger{50} 表示logger名字最长50个字符，否则按照句点分割。
+                   %msg：日志消息，
+                   %n是换行符
+               -->
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}———[%thread]———%-5level———%logger{50}——：%msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <!--
+        RollingFileAppender：设置滚动文件日志附加类配置
+        ThresholdFilter：根据日志等级范围进行过滤内容
+        LevelFilter:根据日志级别进行过滤
+    -->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!--
+           level： 指定日志等级
+            onMatch：存在执行的操作
+            onMismatch：不存在执行的操作
+            操作：DENY(拒接), NEUTRAL(默认中立，即无效), ACCEPT(接受)
+        -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <!--INFO存在则接受-->
+            <onMatch>ACCEPT</onMatch>
+            <!--INFO不存在则拒绝-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!--file：指定日志文件的路径和名称,可以定义多个-->
+        <!-- <file>D:\springlog\sell\info.log</file>
+         <file>D:\springlog\sell\error.log</file>-->
+        <!--设置文件中信息格式，也可以采用layout标签-->
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}———[%thread]———%-5level———%logger{50}——：%msg%n
+            </pattern>
+        </encoder>
+        <!--以时间滚动策越，涉及文件重命名-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--
+                指定路径和文件名
+                文件名可以使用日志正则表达式
+                表达式需符合逻辑：列如指定 %d{yyyy-MM-dd HH:mm:ss.SSS}保存,因为一次性只能生成一个文件
+            -->
+            <fileNamePattern>
+                D:\springlog\sell\%d{yyyy-MM-dd}\info.log
+            </fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--输出Error等级和以上的日志-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>Error</level>
+        </filter>
+        <!--设置文件中信息格式，也可以采用layout标签-->
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}———[%thread]———%-5level———%logger{50}——：%msg%n
+            </pattern>
+        </encoder>
+        <!--以时间滚动策越，涉及文件重命名-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--
+                指定路径和文件名
+                文件名可以使用日志正则表达式
+                表达式需符合逻辑：列如指定 %d{yyyy-MM-dd HH:mm:ss.SSS}保存,因为一次性只能生成一个文件
+            -->
+            <fileNamePattern>
+                D:\springlog\sell\%d{yyyy-MM-dd}\error.log
+            </fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="fileWARNLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <!--INFO存在则接受-->
+            <onMatch>ACCEPT</onMatch>
+            <!--INFO不存在则拒绝-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}———[%thread]———%-5level———%logger{50}——：%msg%n
+            </pattern>
+        </encoder>
+        <!--以时间滚动策越，涉及文件重命名-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                D:\springlog\sell\%d{yyyy-MM-dd}\warn.log
+            </fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+    <root level="info">
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileErrorLog"/>
+        <appender-ref ref="fileWARNLog"/>
+    </root>
+</configuration>

@@ -24,11 +24,11 @@ public class ProductInfoRepositoryTest {
     @Test
     public void findByProductStatus() {
         List<ProductInfo> byProductStatus = repository.findByProductStatus(0);
-        assertNotEquals(0,byProductStatus.size());
+        assertNotEquals(0, byProductStatus.size());
     }
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         ProductInfo productInfo = new ProductInfo();
         productInfo.setProductId("123");
         productInfo.setProductName("皮蛋瘦肉粥");

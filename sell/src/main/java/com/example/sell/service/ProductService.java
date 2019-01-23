@@ -9,20 +9,27 @@ import java.util.List;
 
 public interface ProductService {
 
-    /** 查询单个 */
+    /**
+     * 查询单个
+     */
     ProductInfo findOne(String prudoctId);
 
     /**
-     *  查询所有在架的商品
+     * 查询所有在架的商品
+     *
      * @param
      * @return
      */
     List<ProductInfo> findUpAll();
 
-    /** 查询所有 */
+    /**
+     * 查询所有
+     */
     Page<ProductInfo> findAll(Pageable pageable);
 
-    /** 增加商品 */
+    /**
+     * 增加商品
+     */
     ProductInfo save(ProductInfo productInfo);
 
     //商品库存增加
@@ -30,4 +37,13 @@ public interface ProductService {
 
     //商品库存减少
     void decreaseStock(List<CartDTO> cartDTOList);
+
+    //上架
+    ProductInfo OnSale(String productId);
+
+    //下架
+    ProductInfo Off_Sale(String productId);
+
+    //删除商品
+    void deleteType(Integer type);
 }

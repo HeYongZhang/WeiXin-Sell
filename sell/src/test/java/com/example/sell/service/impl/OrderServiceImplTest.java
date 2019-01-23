@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 @Slf4j
 public class OrderServiceImplTest {
 
-    private final String Openid="110110";
+    private final String Openid = "110110";
 
     @Autowired
     private OrderService orderService;
@@ -35,7 +35,7 @@ public class OrderServiceImplTest {
     @Test
     @Transactional
     public void create() {
-        OrderDTO orderDTO  = new OrderDTO();
+        OrderDTO orderDTO = new OrderDTO();
         //用户信息
         orderDTO.setBuyerName("刘宁");
         orderDTO.setBuyerAddress("长沙开福区青湖街道北大青鸟");
@@ -45,16 +45,16 @@ public class OrderServiceImplTest {
         //购物车内容
         List<OrderDetail> orderDetailList = new ArrayList<>();
 
-        orderDetailList.add(new OrderDetail("123",2));
+        orderDetailList.add(new OrderDetail("123", 2));
         orderDTO.setOrderDetailList(orderDetailList);
         OrderDTO result = orderService.create(orderDTO);
-        log.info("【创建订单】：result={}",result);
+        log.info("【创建订单】：result={}", result);
     }
 
     @Test
     public void findOne() {
         OrderDTO orderDTO = orderService.findOne("1545468718369775890");
-        assertNotEquals(0,orderDTO.getOrderDetailList().size());
+        assertNotEquals(0, orderDTO.getOrderDetailList().size());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class OrderServiceImplTest {
     public void cancle() {
         OrderDTO orderDTO = orderService.findOne("1545468718369775890");
         OrderDTO cancle = orderService.cancle(orderDTO);
-        assertEquals(OrderStatusEnum.DOWN.getCode(),cancle.getOrderStatus());
+        assertEquals(OrderStatusEnum.DOWN.getCode(), cancle.getOrderStatus());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class OrderServiceImplTest {
     public void finish() {
         OrderDTO orderDTO = orderService.findOne("1545468718369775890");
         OrderDTO finish = orderService.finish(orderDTO);
-        assertEquals(OrderStatusEnum.FINISH.getCode(),orderDTO.getOrderStatus());
+        assertEquals(OrderStatusEnum.FINISH.getCode(), orderDTO.getOrderStatus());
     }
 
     @Test
@@ -83,6 +83,13 @@ public class OrderServiceImplTest {
     public void paid() {
         OrderDTO orderDTO = orderService.findOne("1545468718369775890");
         OrderDTO paid = orderService.paid(orderDTO);
-        assertEquals(PayStatusEnum.SUCCESS.getCode(),paid.getPayStatus());
+        assertEquals(PayStatusEnum.SUCCESS.getCode(), paid.getPayStatus());
+    }
+
+    @Test
+    public void findList2(){
+        Page<OrderDTO> list = orderService.findList(new PageRequest(0, 5),"2019-01-03");
+       // assertEquals(2,list.getSize());
+        assertTrue("查询所有的订单列表错误",list.getSize()==5);
     }
 }

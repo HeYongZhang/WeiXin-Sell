@@ -1,7 +1,9 @@
 package com.example.sell.exception;
 
 import com.example.sell.enums.ResultEnum;
+import lombok.Getter;
 
+@Getter
 public class SellException extends RuntimeException {
 
     private Integer code;
@@ -12,7 +14,7 @@ public class SellException extends RuntimeException {
         this.code = resultEnum.getCode();
     }
 
-    public SellException(Integer code,String massage) {
+    public SellException(Integer code, String massage) {
         super(massage);
         this.code = code;
     }

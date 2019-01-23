@@ -5,13 +5,17 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @DynamicUpdate
 @Data
-public class OrderDetail {
+public class OrderDetail implements Serializable {
+
+
+    private static final long serialVersionUID = -8945665406350558490L;
 
     @Id
     private String detailId;

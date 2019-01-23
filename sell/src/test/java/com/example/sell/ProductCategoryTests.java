@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.Transient;
@@ -20,6 +21,9 @@ public class ProductCategoryTests {
 
     @Autowired
     private ProductCategoryRepository repository;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Test
     public void findOne() {
@@ -35,7 +39,7 @@ public class ProductCategoryTests {
 
     @Test
     //@Transactional
-    public void insert(){
+    public void insert() {
        /* ProductCategory productCategory1 = new ProductCategory();
         productCategory1.setCategoryId(1);
         productCategory1.setCategoryName("热销榜");
@@ -51,14 +55,22 @@ public class ProductCategoryTests {
         one.setCategoryType(3);
         ProductCategory save = repository.save(one);
         Assert.assertNotNull(save);
-    };
+    }
+
+    ;
 
 
     @Test
-    public void findByCategoryTypeInTest(){
+    public void findByCategoryTypeInTest() {
        /* List<ProductCategory> byCategoryTypeIn = repository.findByCategoryTypeIn(Arrays.asList(1, 2, 3));
         System.out.println(byCategoryTypeIn);
         Assert.assertNotEquals(0,byCategoryTypeIn.size());*/
+    }
+
+    @Test
+    public void get(){
+        Object o = redisTemplate.opsForValue().get("all");
+        System.out.println(o==null);
     }
 
 }

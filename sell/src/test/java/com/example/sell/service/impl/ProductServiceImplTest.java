@@ -27,19 +27,19 @@ public class ProductServiceImplTest {
     @Test
     public void findOne() {
         ProductInfo one = productService.findOne("123");
-        assertEquals("123",one.getProductId());
+        assertEquals("123", one.getProductId());
     }
 
     @Test
     public void findUpAll() {
         List<ProductInfo> upAll = productService.findUpAll();
-        assertNotEquals(0,upAll.size());
+        assertNotEquals(0, upAll.size());
 
     }
 
     @Test
     public void findAll() {
-        PageRequest request = new PageRequest(0,2);
+        PageRequest request = new PageRequest(0, 2);
         Page<ProductInfo> all = productService.findAll(request);
         System.out.println(all.getTotalPages());
     }
@@ -57,5 +57,17 @@ public class ProductServiceImplTest {
         productInfo.setCategoryType(2);
         ProductInfo save = productService.save(productInfo);
         assertNotNull(save);
+    }
+
+    @Test
+    public void offsale(){
+        ProductInfo productInfo = productService.Off_Sale("123");
+        assertEquals(productInfo.getProductStatus(),ProductStatusEnum.DOWN.getCode());
+    }
+
+    @Test
+    public void onsale(){
+        ProductInfo productInfo = productService.OnSale("123");
+        assertEquals(productInfo.getProductStatus(),ProductStatusEnum.UP.getCode());
     }
 }

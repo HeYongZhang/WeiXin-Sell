@@ -16,16 +16,17 @@ import java.util.List;
 @Slf4j
 public class OrderFrom2OrderDTOConver {
 
-    public static OrderDTO conver(OrderFrom orderFrom){
+    public static OrderDTO conver(OrderFrom orderFrom) {
         Gson gson = new Gson();
         List<OrderDetail> orderDetailList = new ArrayList<>();
         try {
-            orderDetailList = gson.fromJson(orderFrom.getItems(),new TypeToken<List<OrderDetail>>(){}.getType());
-        }catch (Exception e){
-            log.error("【对象转换】：对象转换失败，orderFrom.getItems:{}",orderFrom.getItems());
+            orderDetailList = gson.fromJson(orderFrom.getItems(), new TypeToken<List<OrderDetail>>() {
+            }.getType());
+        } catch (Exception e) {
+            log.error("【对象转换】：对象转换失败，orderFrom.getItems:{}", orderFrom.getItems());
             throw new SellException(ResultEnum.ORDER_PARAM_ERROR);
         }
-        OrderDTO orderDTO  = new OrderDTO();
+        OrderDTO orderDTO = new OrderDTO();
         orderDTO.setBuyerName(orderFrom.getName());
         orderDTO.setBuyerOpenid(orderFrom.getOpenid());
         orderDTO.setBuyerPhone(orderFrom.getPhone());

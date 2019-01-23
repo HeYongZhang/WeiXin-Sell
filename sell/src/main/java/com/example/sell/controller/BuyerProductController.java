@@ -5,11 +5,15 @@ import com.example.sell.VO.ProductVO;
 import com.example.sell.VO.ResultVO;
 import com.example.sell.entity.ProductCategory;
 import com.example.sell.entity.ProductInfo;
+import com.example.sell.exception.SellException;
 import com.example.sell.service.CategoryService;
 import com.example.sell.service.ProductService;
+import com.example.sell.service.RedisLock;
+import com.example.sell.util.KeyUtil;
 import com.example.sell.util.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +31,10 @@ public class BuyerProductController {
     @Autowired
     private CategoryService categoryService;
 
+   // /sell/buyer/product/list
     @RequestMapping("/list")
-    public ResultVO list(){
+    @Cacheable(cacheNames = "product",key = "'all'")
+    public ResultVO list() {
         //1.查询所有上架商品
         List<ProductInfo> productUpList = productService.findUpAll();
 
@@ -38,17 +44,16 @@ public class BuyerProductController {
         //拼接
         List<ProductVO> productVOList = new ArrayList<>();
 
-        for (ProductCategory productCategory : categoryByTypeList){
+        for (ProductCategory productCategory : categoryByTypeList) {
             ProductVO productVO = new ProductVO();
             productVO.setCategoryName(productCategory.getCategoryName());
             productVO.setCategoryType(productCategory.getCategoryType());
-
-           List<ProductInfoVO> productInfoVOList = new ArrayList<>();
-            for (ProductInfo productInfo : productUpList){
-                if(productInfo.getCategoryType()==productCategory.getCategoryType()){
+            List<ProductInfoVO> productInfoVOList = new ArrayList<>();
+            for (ProductInfo productInfo : productUpList) {
+                if (productInfo.getCategoryType() == productCategory.getCategoryType()) {
                     ProductInfoVO productInfoVO = new ProductInfoVO();
                     //将productInfo中和productInfoVo相同内容copy到productInfoVO
-                    BeanUtils.copyProperties(productInfo,productInfoVO);
+                    BeanUtils.copyProperties(productInfo, productInfoVO);
                     productInfoVOList.add(productInfoVO);
                 }
             }
@@ -56,6 +61,11 @@ public class BuyerProductController {
             productVOList.add(productVO);
         }
         ResultVO success = ResultVOUtil.success(productVOList);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return success;
     }
 }

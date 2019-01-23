@@ -28,20 +28,20 @@ public class CategoryServiceImplTest {
     @Test
     public void findOne() {
         ProductCategory one = categoryService.findOne(1);
-        Assert.assertEquals(new Integer(1),one.getCategoryId());
+        Assert.assertEquals(new Integer(1), one.getCategoryId());
     }
 
     @Test
     public void findAll() {
         List<ProductCategory> all = categoryService.findAll();
-        Assert.assertNotEquals(0,all.size());
+        Assert.assertNotEquals(0, all.size());
     }
 
     @Test
     public void findByCategoryTypeIn() {
-      List<ProductCategory> byCategoryTypeIn = categoryService.findByCategoryTypeIn(Arrays.asList(3,3));
+        List<ProductCategory> byCategoryTypeIn = categoryService.findByCategoryTypeIn(Arrays.asList(3, 3));
         System.out.println(byCategoryTypeIn);
-        assertNotEquals(0,byCategoryTypeIn.size());
+        assertNotEquals(0, byCategoryTypeIn.size());
     }
 
     @Test
